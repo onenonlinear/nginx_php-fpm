@@ -21,4 +21,4 @@ jobs:
         uses: ansible-actions/ansible-lint-action@v1.0.3
         with:
           target: "./ansible"
-          python_dependency: 'ansible-core==2.20'
+          python_dependency: 'ansible-core==2.20.0rc1'
