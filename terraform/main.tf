@@ -25,7 +25,7 @@ resource "docker_volume" "nginx_config" {
   name = "${var.project_name}_nginx_config"
 }
 
-# Create container Nginx
+# Create an Nginx container
 resource "docker_container" "nginx" {
   image = "nginx:1.29.2"
   name  = "${var.project_name}_nginx"
