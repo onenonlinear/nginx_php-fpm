@@ -13,6 +13,17 @@ Status of last event for Terraform workflow: <br>
    - terraform plan
    - terraform apply -auto-approve
 3. check
-   - curl http://localhost:8080/
-   - curl http://localhost:8080/healthz
+   - ```curl http://localhost:8080/```
+   - ```curl http://localhost:8080/healthz```
 
+
+### Ansible
+
+```Testing in ubuntu 20.04```
+
+1. Requirements: installed ansible
+2. ```cd ansible``` and run command:
+   - ```ansible-playbook -i inventory/containers.ini playbooks/site.yml```
+3. check
+   - ```curl http://localhost/```
+   - ```curl http://localhost/healthz```

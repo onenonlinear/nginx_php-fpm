@@ -1,0 +1,23 @@
+name: Ansible
+
+on:
+  workflow_dispatch:  
+  push:
+    paths:
+      - ansible/**
+  pull_request:
+    paths:
+      - ansible/**
+
+jobs:
+  lint:
+    name: "Ansible Lint"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Ansible-lint
+        uses: ansible/ansible-lint-action@v6
+        with:
+          target: "./ansible"

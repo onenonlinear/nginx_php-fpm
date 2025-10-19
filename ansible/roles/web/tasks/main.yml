@@ -1,0 +1,94 @@
+---
+# tasks file for web
+- name: Install required packages
+  apt:
+    name:
+      - nginx
+      - "php{{ apt_php_version }}-fpm"
+    state: present
+    update_cache: yes
+
+- name: Deploy nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/website.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
+
+- name: ensures /var/www/html dir exists
+  file:
+    path: "/var/www/html"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0755
+
+# setting the www.conf .
+- name: Set permissions on socket - owner
+  lineinfile:
+    dest: "/etc/php/{{ apt_php_version }}/fpm/pool.d/www.conf"
+    regexp: '^;?listen.owner'
+    line: "listen.owner = {{ php_owner }}"
+  notify: restart php-fpm
+
+- name: Set permissions on socket - group
+  lineinfile:
+    dest: "/etc/php/{{ apt_php_version }}/fpm/pool.d/www.conf"
+    regexp: '^;?listen.group'
+    line: 'listen.group = {{ php_group }}'
+  notify: restart php-fpm
+
+- name: Set permissions on socket - mode
+  lineinfile:
+    dest: "/etc/php/{{ apt_php_version }}/fpm/pool.d/www.conf"
+    regexp: '^;?listen.mode'
+    line: 'listen.mode = 0660'
+  notify: restart php-fpm
+
+- name: Deploy index.php
+  copy:
+    src: index.php
+    dest: /var/www/html/index.php
+    owner: www-data
+    group: www-data
+    mode: 0644
+  notify:
+    - restart php-fpm
+
+- name: Ensure php-fpm service is enabled and started
+  service:
+    name: php{{ apt_php_version }}-fpm
+    state: started
+    enabled: yes
+
+- name: Ensure nginx service is enabled and started
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Deploy logrotate config for nginx logs
+  copy:
+    content: |
+      /var/log/nginx/*log {
+          daily
+          missingok
+          rotate 14
+          compress
+          delaycompress
+          notifempty
+          create 0640 www-data adm
+          sharedscripts
+          postrotate
+              [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
+          endscript
+      }
+    dest: /etc/logrotate.d/nginx
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx

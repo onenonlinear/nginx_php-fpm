@@ -1,0 +1,26 @@
+server {
+   listen 80;
+   server_name localhost;
+   root /var/www/html;
+   index index.php index.html;
+
+   location /healthz {
+       default_type application/json;
+       return 200 '{"status":"ok","service":"nginx","env":"{{ app_env }}"}';
+   }
+
+   location / {
+       try_files $uri $uri/ /index.php?$query_string;
+   }
+
+   location ~ \.php$ {
+       fastcgi_split_path_info ^(.+\.php)(/.+)$;
+       fastcgi_pass unix:/run/php/php-fpm.sock;
+       fastcgi_index index.php;
+       include fastcgi_params;
+       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+   }
+
+   access_log /var/log/nginx/access-web.log;
+   error_log /var/log/nginx/error-web.log warn;
+}
