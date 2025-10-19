@@ -1,6 +1,9 @@
 
 ## Nginx + php-fpm
 
+Status of last event for Terraform workflow: <br>
+<img src="https://github.com/onenonlinear/nginx_php-fpm/github-actions/actions/workflows/terraform.yml/badge.svg?"><br>
+
 ### Terraform 
 1. clone repo
 2. ```cd terraform``` and run command:
