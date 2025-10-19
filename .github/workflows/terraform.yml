@@ -1,0 +1,33 @@
+name: Terraform
+
+on:
+  workflow_dispatch:  
+  push:
+    paths:
+      - terraform/**
+  pull_request:
+    paths:
+      - terraform/**
+
+jobs:
+  terraform:
+    name: "Test: Terraform"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ./terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform init -input=false
+      - run: terraform fmt -check
+      - run: terraform validate
+      - run: terraform plan -out=tfplan
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: terraform/tfplan
+          if-no-files-found: error
+          overwrite: true
+
