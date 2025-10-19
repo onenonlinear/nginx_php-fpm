@@ -4,6 +4,9 @@
 Status of last event for Terraform workflow: <br>
 <img src="https://github.com/onenonlinear/nginx_php-fpm/actions/workflows/terraform.yml/badge.svg"><br>
 
+Status of last event for Ansible Lint workflow: <br>
+<img src="ttps://github.com/onenonlinear/nginx_php-fpm/actions/workflows/ansible.yml/badge.svg"><br>
+
 ### Terraform 
 1. clone repo
 2. ```cd terraform``` and run command:
