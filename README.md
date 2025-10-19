@@ -21,8 +21,10 @@ Status of last event for Terraform workflow: <br>
 
 ```Testing in ubuntu 20.04```
 
-1. Requirements: installed ansible
+1. Requirements: installed ansible, ansible-lint
 2. ```cd ansible``` and run command:
+   - ```ansible-lint playbooks/site.yml```
+
    - ```ansible-playbook -i inventory/containers.ini playbooks/site.yml```
 3. check
    - ```curl http://localhost/```
