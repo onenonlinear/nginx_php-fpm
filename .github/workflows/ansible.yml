@@ -18,6 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run Ansible-lint
-        uses: ansible/ansible-lint-action@v6
+        uses: ansible-actions/ansible-lint-action@v6
         with:
           target: "./ansible"
