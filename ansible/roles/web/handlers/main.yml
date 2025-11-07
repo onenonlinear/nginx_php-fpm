@@ -1,11 +1,11 @@
 ---
 # handlers file for web
-- name: restart nginx
-  service:
+- name: Restart nginx
+  ansible.builtin.service:
     name: nginx
     state: restarted
 
-- name: restart php-fpm
-  service:
-    name: "php{{ apt_php_version }}-fpm"
+- name: Restart php-fpm
+  ansible.builtin.service:
+    name: "php{{ web_apt_php_version }}-fpm"
     state: restarted

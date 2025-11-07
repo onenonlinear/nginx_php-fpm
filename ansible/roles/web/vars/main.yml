@@ -1,2 +1,6 @@
 ---
 # vars file for web
+web_apt_php_version: "7.4"
+# ubuntu run nginx user
+web_php_owner: "nginx"
+web_php_group: "nginx"
