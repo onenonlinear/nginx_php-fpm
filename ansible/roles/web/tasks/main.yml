@@ -54,7 +54,7 @@
     dest: /var/www/html/index.php
     owner: www-data
     group: www-data
-    mode: 0644
+    mode: "0644"
   notify:
     - Restart php-fpm
 
@@ -68,7 +68,7 @@
   ansible.builtin.service:
     name: nginx
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Deploy logrotate config for nginx logs
   ansible.builtin.copy:

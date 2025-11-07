@@ -20,5 +20,5 @@ jobs:
       - name: Run Ansible-lint
         uses: ansible-actions/ansible-lint-action@v1.0.3
         with:
-          target: "./ansible"
+          target: "ansible"
           python_dependency: 'ansible-core==2.20.0rc1'

@@ -4,4 +4,4 @@
   become: true
 
   roles:
-    - roles/web
+    - { role: roles/web }
